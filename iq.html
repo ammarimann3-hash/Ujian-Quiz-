@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Jenius IQ (Aras Tinggi KBAT) - Penerbitan Ilmu Bakti</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ilmu: {
+                            50: '#f0f6ff',
+                            100: '#e0edff',
+                            600: '#1e40af',
+                            800: '#1e3a8a',
+                            900: '#0f172a',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        cert: ['Cinzel', 'serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableCertificate, #printableCertificate * {
+                visibility: visible;
+            }
+            #printableCertificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none !important;
+                border: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+
+    <!-- Header Rasmi Ilmu Bakti -->
+    <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white shadow-lg sticky top-0 z-40 border-b border-amber-500/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
+            <div class="flex items-center space-x-3.5">
+                <div class="bg-amber-500 text-blue-950 p-2.5 rounded-xl shadow-md flex items-center justify-center font-bold font-heading">
+                    <i class="fa-solid fa-brain text-xl"></i>
+                    <span class="text-xs tracking-wider block font-black border-l border-blue-900/30 ml-2 pl-2">IQ</span>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold tracking-tight font-heading text-white flex items-center gap-2">
+                        PENERBITAN ILMU BAKTI <span class="text-xs bg-amber-400 text-blue-950 font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wide">Jenius IQ KBAT</span>
+                    </h1>
+                    <p class="text-xs text-blue-200">Pentaksiran Aras Tinggi (10 Objektif + 10 Subjektif • Masa: 1 Jam 15 Minit)</p>
+                </div>
+            </div>
+            <div id="headerStatus" class="hidden sm:flex items-center gap-3">
+                <span id="timerBadge" class="text-xs bg-blue-800/80 border border-blue-700/60 px-3.5 py-1.5 rounded-lg text-blue-100 flex items-center gap-2 font-mono font-bold">
+                    <i class="fa-solid fa-clock text-amber-400"></i> <span id="timerDisplay">01:15:00</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Container Main -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+        <!-- STEP 1: PILIHAN TAHUN/TINGKATAN & ISI BORANG MAKLUMAT -->
+        <section id="stepRegister" class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden transition-all duration-300">
+            <div class="bg-gradient-to-r from-blue-800 to-indigo-900 p-6 text-white text-center relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-9xl">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold font-heading text-amber-300 mb-1">Daftar & Mula Ujian Jenius IQ (KBAT)</h2>
+                <p class="text-sm text-blue-100">Pilih peringkat sekolah anda. Mengandungi 20 Soalan Aras Tinggi (10 Objektif + 10 Subjektif • Masa: 1 Jam 15 Minit).</p>
+            </div>
+
+            <form id="registrationForm" onsubmit="handleStartTest(event)" class="p-6 sm:p-8 space-y-6">
+                <!-- Pilihan Tahun / Tingkatan -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">
+                        <i class="fa-solid fa-layer-group text-blue-600 mr-1.5"></i>Pilih Tahap Persekolahan (Soalan Unik Ikut Peringkat) <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="gradeSelector">
+                        <button type="button" onclick="selectGrade('Tahun 5')" class="grade-btn border-2 border-slate-200 hover:border-blue-500 rounded-xl p-3 text-center text-sm font-medium transition-all hover:bg-blue-50 focus:outline-none">Tahun 5</button>
+                        <button type="button" onclick="selectGrade('Tahun 6')" class="grade-btn border-2 border-slate-200 hover:border-blue-500 rounded-xl p-3 text-center text-sm font-medium transition-all hover:bg-blue-50 focus:outline-none">Tahun 6</button>
+                        <button type="button" onclick="selectGrade('Tingkatan 1')" class="grade-btn border-2 border-slate-200 hover:border-blue-500 rounded-xl p-3 text-center text-sm font-medium transition-all hover:bg-blue-50 focus:outline-none">Tingkatan 1</button>
+                        <button type="button" onclick="selectGrade('Tingkatan 2')" class="grade-btn border-2 border-slate-200 hover:border-blue-500 rounded-xl p-3 text-center text-sm font-medium transition-all hover:bg-blue-50 focus:outline-none">Tingkatan 2</button>
+                        <button type="button" onclick="selectGrade('Tingkatan 3')" class="grade-btn border-2 border-slate-200 hover:border-blue-500 rounded-xl p-3 text-center text-sm font-medium transition-all hover:bg-blue-50 focus:outline-none">Tingkatan 3</button>
+                        <button type="button" onclick="selectGrade('Tingkatan 4')" class="grade-btn border-2 border-slate-200 hover:border-blue-500 rounded-xl p-3 text-center text-sm font-medium transition-all hover:bg-blue-50 focus:outline-none">Tingkatan 4</button>
+                        <button type="button" onclick="selectGrade('Tingkatan 5')" class="grade-btn border-2 border-slate-200 hover:border-blue-500 rounded-xl p-3 text-center text-sm font-medium transition-all hover:bg-blue-50 focus:outline-none col-span-2 sm:col-span-2">Tingkatan 5</button>
+                    </div>
+                    <input type="hidden" id="selectedGradeInput" required>
+                </div>
+
+                <!-- Input Maklumat Pelajar -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Penuh Calon <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-user text-slate-400 absolute left-3.5 top-3 text-sm"></i>
+                            <input type="text" id="inputNama" required placeholder="Cth: Muhammad Amirul bin Rosli" class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">No. Kad Pengenalan (IC) <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-id-card text-slate-400 absolute left-3.5 top-3 text-sm"></i>
+                            <input type="text" id="inputIC" required placeholder="Cth: 100512-01-5431" class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">No. Giliran Peperiksaan <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-hashtag text-slate-400 absolute left-3.5 top-3 text-sm"></i>
+                            <input type="text" id="inputNoGiliran" required placeholder="Cth: IB2026-9042" class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jenis Sekolah <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-school text-slate-400 absolute left-3.5 top-3 text-sm"></i>
+                            <select id="inputJenisSekolah" required class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
+                                <option value="">Pilih Jenis Sekolah</option>
+                                <option value="Sekolah Kebangsaan (SK)">Sekolah Kebangsaan (SK)</option>
+                                <option value="Sekolah Jenis Kebangsaan Cina (SJKC)">Sekolah Jenis Kebangsaan Cina (SJKC)</option>
+                                <option value="Sekolah Jenis Kebangsaan Tamil (SJKT)">Sekolah Jenis Kebangsaan Tamil (SJKT)</option>
+                                <option value="Sekolah Menengah Kebangsaan (SMK)">Sekolah Menengah Kebangsaan (SMK)</option>
+                                <option value="Sekolah Menengah Agama (SMA)">Sekolah Menengah Agama (SMA)</option>
+                                <option value="Sekolah Berasrama Penuh (SBP)">Sekolah Berasrama Penuh (SBP)</option>
+                                <option value="Lain-lain">Lain-lain</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Sekolah <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-building-columns text-slate-400 absolute left-3.5 top-3 text-sm"></i>
+                            <input type="text" id="inputNamaSekolah" required placeholder="Cth: SK Taman Sri Tebrau" class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Lokasi Sekolah / Daerah <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-location-dot text-slate-400 absolute left-3.5 top-3 text-sm"></i>
+                            <input type="text" id="inputLokasi" required placeholder="Cth: Johor Bahru, Johor" class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jarak Rumah ke Sekolah (KM) <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <i class="fa-solid fa-route text-slate-400 absolute left-3.5 top-3 text-sm"></i>
+                            <input type="number" step="0.1" min="0" id="inputJarak" required placeholder="Cth: 4.5" class="w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100">
+                    <button type="submit" class="w-full py-3.5 px-6 bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 hover:from-blue-800 hover:to-indigo-900 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-600/30 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-base">
+                        <span>Mula Ujian KBAT (20 Soalan Cabaran)</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <p class="text-center text-xs text-slate-400 mt-3">Masa menjawab: <strong>1 Jam 15 Minit</strong>. Terdiri daripada <strong>10 Soalan Objektif</strong> dan <strong>10 Soalan Subjektif Aras Tinggi (KBAT)</strong> yang dinilai secara khusus mengikut peringkat persekolahan anda.</p>
+                </div>
+            </form>
+        </section>
+
+        <!-- STEP 2: MODUL UJIAN 20 SOALAN -->
+        <section id="stepTest" class="hidden">
+            <!-- Summary Bar -->
+            <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-100 text-blue-800 p-3 rounded-xl">
+                        <i class="fa-solid fa-user-graduate text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 id="displayCandidateName" class="font-bold text-slate-800 text-base">Muhammad Amirul</h3>
+                        <p id="displayCandidateMeta" class="text-xs text-slate-500">Tahun 6 • SK Taman Sri Tebrau</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs font-medium">
+                    <div class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-2 rounded-xl flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                        <span>Dijawab: <strong id="statAnsweredCount" class="text-sm">0</strong> / 20</span>
+                    </div>
+                    <div class="bg-amber-50 text-amber-700 border border-amber-200 px-3 py-2 rounded-xl flex items-center gap-2">
+                        <i class="fa-solid fa-hourglass-half text-amber-500"></i>
+                        <span>Baki Soalan: <strong id="statRemainingCount" class="text-sm">20</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+                <!-- Left Column: Questions Layout -->
+                <div class="lg:col-span-3 space-y-6">
+                    <!-- Navigasi Halaman Soalan -->
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between gap-3">
+                        <button onclick="changePage(-1)" id="btnPrevPage" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed">
+                            <i class="fa-solid fa-chevron-left"></i> Sebelah
+                        </button>
+                        <span id="pageIndicator" class="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg">
+                            Soalan 1 - 5 dari 20
+                        </span>
+                        <button onclick="changePage(1)" id="btnNextPage" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                            Seterusnya <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Container Soalan Dinamik -->
+                    <div id="questionsContainer" class="space-y-6">
+                        <!-- Soalan disuntik secara JS -->
+                    </div>
+
+                    <!-- Bottom Action Controls -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                        <div class="text-xs text-slate-500">
+                            * Semak semula semua jawapan anda sebelum hantar untuk penilaian AI.
+                        </div>
+                        <button onclick="confirmSubmitTest()" class="w-full sm:w-auto px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Hantar & Penilaian AI Jenius</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Question Palette Navigation Grid -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-24">
+                        <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                                <i class="fa-solid fa-grip text-blue-600"></i> Palet 20 Soalan
+                            </h4>
+                            <span class="text-[10px] text-slate-400">Tekan No. Soalan</span>
+                        </div>
+
+                        <!-- Filter Tab -->
+                        <div class="grid grid-cols-3 gap-1 mb-3 bg-slate-100 p-1 rounded-lg text-[10px] font-semibold">
+                            <button onclick="filterPalette('all')" id="filterAll" class="py-1 rounded bg-white text-blue-700 shadow-sm">Semua</button>
+                            <button onclick="filterPalette('obj')" id="filterObj" class="py-1 rounded text-slate-600">Objektif (1-10)</button>
+                            <button onclick="filterPalette('subj')" id="filterSubj" class="py-1 rounded text-slate-600">Subjektif (11-20)</button>
+                        </div>
+
+                        <!-- 20 Question Grid Palette -->
+                        <div id="paletteGrid" class="grid grid-cols-4 gap-2 max-h-[360px] overflow-y-auto custom-scrollbar p-1">
+                            <!-- Grid item JS -->
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] space-y-1.5">
+                            <div class="flex items-center gap-2 text-slate-600">
+                                <span class="w-3 h-3 rounded-md bg-emerald-500 inline-block"></span> Sudah Dijawab
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-600">
+                                <span class="w-3 h-3 rounded-md bg-slate-200 border border-slate-300 inline-block"></span> Belum Dijawab
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-600">
+                                <span class="w-3 h-3 rounded-md bg-blue-600 inline-block"></span> Semasa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- STEP 3: LOADING AI EVALUATION -->
+        <section id="stepEvaluating" class="hidden max-w-xl mx-auto my-12 bg-white p-8 rounded-3xl shadow-2xl border border-slate-200 text-center space-y-6">
+            <div class="relative w-28 h-28 mx-auto flex items-center justify-center">
+                <div class="absolute inset-0 rounded-full border-4 border-blue-100 animate-ping opacity-75"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-t-blue-600 border-r-indigo-600 border-b-amber-500 border-l-purple-600 animate-spin"></div>
+                <i class="fa-solid fa-brain text-4xl text-blue-800 animate-bounce"></i>
+            </div>
+
+            <div class="space-y-2">
+                <h3 class="text-xl font-extrabold text-slate-800 font-heading">AI Penilaian KBAT Dalam Pemprosesan...</h3>
+                <p class="text-xs text-slate-500 max-w-sm mx-auto">Sistem AI Ilmu Bakti sedang menyemak jawapan objektif & jawapan huraian KBAT mengikut tahap persekolahan anda...</p>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden p-0.5 border border-slate-200">
+                <div id="aiProgressBar" class="bg-gradient-to-r from-blue-600 via-indigo-600 to-amber-500 h-full rounded-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <div id="aiStatusText" class="text-xs font-semibold text-blue-700 bg-blue-50 py-2 px-4 rounded-xl border border-blue-100">
+                Menganalisis tahap kognitif & jawapan subjektif...
+            </div>
+        </section>
+
+        <!-- STEP 4: KAD LAPORAN IQ & DIAGNOSTIK AKADEMIK -->
+        <section id="stepReport" class="hidden max-w-5xl mx-auto space-y-8">
+
+            <!-- Banner Keputusan -->
+            <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-2xl relative overflow-hidden border border-amber-500/30">
+                <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                    <div class="space-y-2 text-center md:text-left">
+                        <span class="inline-block bg-amber-400 text-blue-950 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                            Kad Laporan IQ & KBAT Ilmu Bakti
+                        </span>
+                        <h2 id="reportCandidateName" class="text-2xl sm:text-3xl font-extrabold font-heading text-white">
+                            Muhammad Amirul bin Rosli
+                        </h2>
+                        <p id="reportCandidateMeta" class="text-xs text-blue-200">
+                            Tahun 6 • SK Taman Sri Tebrau • IC: 100512-01-5431
+                        </p>
+                    </div>
+
+                    <!-- Badge IQ & Persona -->
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 text-center min-w-[220px]">
+                        <span class="text-xs uppercase text-amber-300 tracking-wider font-semibold block">Skor Jenius IQ</span>
+                        <div id="reportIQScore" class="text-4xl font-black font-heading text-amber-400 my-1">128</div>
+                        <div id="reportIQTitle" class="text-xs font-bold text-white bg-blue-800/80 px-2.5 py-1 rounded-lg inline-block border border-blue-700">
+                            Setara: Tun Dr. Mahathir
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid 3 Kad Laporan Utama -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- 1. Tahap Penguasaan TP1 - TP6 -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-3">
+                    <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                        <div class="p-2.5 bg-blue-100 text-blue-700 rounded-xl">
+                            <i class="fa-solid fa-award text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Tahap Penguasaan</h4>
+                            <p class="text-xs text-slate-400">Standard KSSR / KSSM</p>
+                        </div>
+                    </div>
+                    <div class="text-center py-2">
+                        <span id="reportTPBadge" class="text-3xl font-black text-blue-700 bg-blue-50 px-4 py-2 rounded-2xl inline-block border border-blue-200">
+                            TP 5
+                        </span>
+                        <p id="reportTPDesc" class="text-xs text-slate-600 mt-2 font-medium">Sangat Baik (Penilaian KBAT Cemerlang)</p>
+                    </div>
+                </div>
+
+                <!-- 2. Cadangan Masa Ulangkaji -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-3">
+                    <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                        <div class="p-2.5 bg-amber-100 text-amber-700 rounded-xl">
+                            <i class="fa-solid fa-stopwatch text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Masa Ulangkaji Disyorkan</h4>
+                            <p class="text-xs text-slate-400">Nasihat Pembelajaran AI</p>
+                        </div>
+                    </div>
+                    <div class="text-center py-2">
+                        <span id="reportStudyHours" class="text-2xl font-black text-amber-600">2 Jam 30 Minit</span>
+                        <p class="text-xs text-slate-500 mt-1">sehari (Fokus Subjek KBAT & Analitik)</p>
+                    </div>
+                </div>
+
+                <!-- 3. Status Kelayakan Sijil -->
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-slate-200 space-y-3">
+                    <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                        <div class="p-2.5 bg-emerald-100 text-emerald-700 rounded-xl">
+                            <i class="fa-solid fa-file-certificate text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Status Sijil IQ</h4>
+                            <p class="text-xs text-slate-400">Penerbitan Ilmu Bakti</p>
+                        </div>
+                    </div>
+                    <div class="text-center py-2">
+                        <span id="reportCertStatus" class="inline-flex items-center gap-1.5 text-xs font-extrabold text-emerald-700 bg-emerald-100 px-3 py-1.5 rounded-full">
+                            <i class="fa-solid fa-circle-check"></i> LAYAK MENDAPAT SIJIL
+                        </span>
+                        <p class="text-[11px] text-slate-500 mt-2">Memenuhi syarat kecerdasan melebihi skor penanda aras.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Huraian Analisis AI Utama -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-md border border-slate-200 space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                    <div class="p-3 bg-indigo-100 text-indigo-700 rounded-2xl">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base">Huraian Penilaian Teliti AI (Ilmu Bakti KBAT)</h3>
+                        <p class="text-xs text-slate-500">Analisis Kognitif, Prestasi 10 Objektif + 10 Subjektif Aras Tinggi</p>
+                    </div>
+                </div>
+                <div id="reportAIDescription" class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-3 bg-slate-50 p-5 rounded-2xl border border-slate-200/80">
+                    <!-- Text AI disuntik JS -->
+                </div>
+            </div>
+
+            <!-- Analisis Kemahiran Subjek & Prospek Kerjaya Masa Depan -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Kemahiran Subjek -->
+                <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 space-y-4">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-blue-600"></i> Analisis Kemahiran Mata Pelajaran
+                    </h4>
+                    <div id="reportSubjectBreakdown" class="space-y-3">
+                        <!-- Progress Subjek -->
+                    </div>
+                </div>
+
+                <!-- Prospek Kerjaya Masa Depan -->
+                <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 space-y-4">
+                    <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-user-tie text-indigo-600"></i> Cadangan Prospek Kerjaya Masa Depan
+                    </h4>
+                    <p class="text-xs text-slate-500">Berdasarkan kecenderungan penaakulan KBAT:</p>
+                    <div id="reportCareersList" class="grid grid-cols-1 gap-2.5">
+                        <!-- List Kerjaya -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Action Button Sijil -->
+            <div id="certActionContainer" class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 rounded-3xl p-6 text-white text-center shadow-xl space-y-4">
+                <h3 class="text-lg font-extrabold font-heading">Tahniah! Anda Layak Menerima Sijil Jenius IQ</h3>
+                <p class="text-xs text-amber-100 max-w-xl mx-auto">Sijil Penghargaan ini dikeluarkan secara rasmi oleh Penerbitan Ilmu Bakti Sdn. Bhd. lengkap dengan Kod Pengesahan Digital.</p>
+                <div>
+                    <button onclick="generateOfficialCertificate()" class="px-8 py-3.5 bg-blue-950 hover:bg-blue-900 text-white font-extrabold text-sm rounded-xl shadow-2xl transition transform hover:-translate-y-0.5 inline-flex items-center gap-2">
+                        <i class="fa-solid fa-certificate text-amber-400 text-lg"></i>
+                        <span>Bina & Jana Sijil Digital</span>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- STEP 5: SIJIL PENGHARGAAN DIGITAL (PRINTABLE) -->
+        <section id="stepCertificate" class="hidden max-w-4xl mx-auto space-y-6">
+
+            <div class="no-print flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                <button onclick="backToReport()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Kad Laporan
+                </button>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-print"></i> Cetak / Simpan PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Templat Sijil Rasmi -->
+            <div id="printableCertificate" class="bg-amber-50/40 p-6 sm:p-10 rounded-2xl border-[12px] border-double border-amber-600 shadow-2xl text-slate-900 relative overflow-hidden my-4">
+                <!-- Watermark Background Logo -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                    <i class="fa-solid fa-brain text-[28rem] text-blue-950"></i>
+                </div>
+
+                <!-- Inner Gold Border -->
+                <div class="border-2 border-amber-500/60 p-6 sm:p-8 rounded-lg relative z-10 text-center space-y-6">
+
+                    <!-- Certificate Header -->
+                    <div class="space-y-2">
+                        <div class="flex justify-center items-center gap-2 text-blue-950">
+                            <i class="fa-solid fa-book-open text-2xl text-amber-600"></i>
+                            <h3 class="font-extrabold font-heading tracking-widest text-lg sm:text-xl uppercase">PENERBITAN ILMU BAKTI SDN. BHD.</h3>
+                        </div>
+                        <p class="text-[10px] text-slate-500 tracking-wider uppercase font-semibold">Sistem Pentaksiran Kecerdasan & IQ Kebangsaan</p>
+                        <div class="w-32 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-2"></div>
+                    </div>
+
+                    <!-- Certificate Title -->
+                    <div>
+                        <h1 class="font-cert text-2xl sm:text-4xl font-bold text-amber-700 tracking-wider uppercase">SIJIL PENGHARGAAN</h1>
+                        <p class="font-cert text-sm text-slate-600 italic tracking-widest mt-1">Ujian Pentaksiran Jenius IQ (KBAT)</p>
+                    </div>
+
+                    <!-- Certification Body Text -->
+                    <div class="space-y-3 max-w-2xl mx-auto py-2">
+                        <p class="text-xs text-slate-600 uppercase tracking-widest">Dengan ini disahkan bahawa</p>
+                        <h2 id="certCandidateName" class="text-2xl sm:text-3xl font-extrabold font-heading text-blue-950 border-b-2 border-slate-300 inline-block px-8 pb-1">
+                            MUHAMMAD AMIRUL BIN ROSLI
+                        </h2>
+                        <p id="certCandidateMeta" class="text-xs text-slate-600 font-medium pt-1">
+                            NO. IC: <span id="certIC">100512-01-5431</span> | NO. GILIRAN: <span id="certNoGiliran">IB2026-9042</span>
+                        </p>
+                        <p id="certSchool" class="text-xs font-semibold text-slate-800">
+                            SEKOLAH: SK TAMAN SRI TEBRAU (TAHUN 6)
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed px-4 pt-2">
+                            telah menduduki dan menyelesaikan <strong class="text-slate-900">20 Soalan Pentaksiran Jenius IQ Aras Tinggi (KBAT)</strong> dengan menunjukkan prestasi pencapaian kognitif, penaakulan logik, dan analisis intelektual yang cemerlang.
+                        </p>
+                    </div>
+
+                    <!-- IQ Metrics Box -->
+                    <div class="inline-flex items-center gap-6 bg-white/80 border border-amber-300 rounded-xl px-6 py-3 shadow-sm my-2">
+                        <div class="text-center border-r border-slate-200 pr-6">
+                            <span class="text-[10px] uppercase font-bold text-slate-500 block">Skor Jenius IQ</span>
+                            <span id="certIQVal" class="text-2xl font-black font-heading text-blue-900">128</span>
+                        </div>
+                        <div class="text-center border-r border-slate-200 pr-6">
+                            <span class="text-[10px] uppercase font-bold text-slate-500 block">Tahap Penguasaan</span>
+                            <span id="certTPVal" class="text-2xl font-black font-heading text-amber-600">TP 5</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-[10px] uppercase font-bold text-slate-500 block">Kategori Tokoh Setara</span>
+                            <span id="certSetaraVal" class="text-xs font-bold text-blue-950 block mt-1">Tun Dr. Mahathir</span>
+                        </div>
+                    </div>
+
+                    <!-- Footer Signatures & Seal -->
+                    <div class="pt-8 grid grid-cols-3 items-end gap-4 text-center text-xs">
+
+                        <!-- Left: QR Code Verification -->
+                        <div class="space-y-1 text-left pl-4">
+                            <div class="w-16 h-16 bg-white border border-slate-300 p-1 rounded-md shadow-inner flex items-center justify-center">
+                                <i class="fa-solid fa-qrcode text-4xl text-slate-800"></i>
+                            </div>
+                            <span class="text-[9px] text-slate-400 block">Kod Pengesahan Sijil:</span>
+                            <span id="certSerialNo" class="text-[10px] font-mono font-bold text-slate-700 block">IB-IQ2026-X9481</span>
+                        </div>
+
+                        <!-- Center: Official Gold Stamp -->
+                        <div class="flex justify-center">
+                            <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-200 p-1 shadow-lg flex items-center justify-center">
+                                <div class="w-full h-full rounded-full border-2 border-dashed border-amber-800 flex flex-col items-center justify-center text-[8px] font-bold text-amber-950 uppercase tracking-tighter">
+                                    <i class="fa-solid fa-star text-amber-800 mb-0.5"></i>
+                                    <span>ILMU BAKTI</span>
+                                    <span class="text-[7px]">COP RASMI</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Director Signature -->
+                        <div class="space-y-1 text-right pr-4">
+                            <div class="font-serif italic text-lg text-blue-950 font-bold border-b border-slate-400 pb-1 inline-block px-4">
+                                Dato' Hj. Mokhtar Hassan
+                            </div>
+                            <p class="text-[10px] font-bold text-slate-800">Pengarah Pentaksiran Akademik</p>
+                            <p class="text-[9px] text-slate-500">Penerbitan Ilmu Bakti Sdn. Bhd.</p>
+                            <p id="certDate" class="text-[9px] text-slate-400">Tarikh: 14 Ogos 2026</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Custom Modal Message Box -->
+    <div id="customModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center space-y-4 border border-slate-100">
+            <div id="modalIconContainer" class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 mx-auto flex items-center justify-center text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="modalTitle" class="text-base font-bold text-slate-800">Peringatan</h3>
+            <p id="modalMessage" class="text-xs text-slate-600 leading-relaxed">Sila lengkapkan semua maklumat borang.</p>
+            <button onclick="closeCustomModal()" class="w-full py-2.5 bg-blue-800 hover:bg-blue-900 text-white font-bold text-xs rounded-xl transition">
+                Faham
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // State Pengurusan Aplikasi
+        let userData = {
+            grade: '',
+            nama: '',
+            ic: '',
+            noGiliran: '',
+            jenisSekolah: '',
+            namaSekolah: '',
+            lokasi: '',
+            jarak: ''
+        };
+
+        let userAnswers = {}; // { qIndex: "A" atau text }
+        let questionsList = [];
+        let currentPage = 0; // 0..3 (5 soalan per halaman = 20 soalan total)
+        let timerInterval = null;
+        let timeRemainingSeconds = 75 * 60; // 1 Jam 15 Minit (75 Minit)
+        let paletteFilter = 'all';
+
+        // Pangkalan Soalan Mengikut Tahun & Tingkatan (10 Objektif + 10 Subjektif KBAT / Aras Tinggi)
+        const dbQuestionsByGrade = {
+            "Tahun 5": [
+                // OBJEKTIF (1 - 10)
+                { id: 1, type: "objektif", subject: "Matematik (KBAT)", question: "Sebuah tangki mengandungi 3/4 l air. Selepas 1/2 daripada air itu digunakan dan 0.25 l air ditambah semula, berapakah isi padu air (dalam l) yang ada sekarang?", options: ["A. 0.50 l", "B. 0.625 l", "C. 0.75 l", "D. 0.875 l"], correctAnswer: "B" },
+                { id: 2, type: "objektif", subject: "Sains (KBAT)", question: "Mengapakah pokok cengal bertindak menggugurkan daunnya pada musim panas yang berpanjangan?", options: ["A. Untuk mengurangkan kadar kehilangan air menerusi transpirasi", "B. Untuk meningkatkan kadar fotosintesis di batang", "C. Untuk menarik kehadiran serangga pendebunga", "D. Untuk menyimpan kanji dalam akar"], correctAnswer: "A" },
+                { id: 3, type: "objektif", subject: "Bahasa Melayu", question: "Pilih ayat yang menggunakan kata majmuk kiasan dengan betul.", options: ["A. Ali merupakan anak emas kepada Encik Hashim kerana dia rajin.", "B. Meja makan itu bertukar menjadi anak emas apabila dibersihkan.", "C. Baju berwarna kuning itu adalah anak emas kesayangan adik.", "D. Kereta baharu itu mempunyai sifat anak emas."], correctAnswer: "A" },
+                { id: 4, type: "objektif", subject: "Bahasa Inggeris", question: "Choose the word that best completes the sentence: 'Despite facing severe obstacles, the young scientist remained __________ and finished her experiment.'", options: ["A. hesitant", "B. resilient", "C. reluctant", "D. fragile"], correctAnswer: "B" },
+                { id: 5, type: "objektif", subject: "Sejarah", question: "Apakah ikhtiar utama Tok Janggut dalam menentang pengenalan sistem cukai British di Kelantan?", options: ["A. Meminta bantuan tentera Siam", "B. Menubuhkan pentadbiran sendiri di Pasir Puteh", "C. Berhijrah ke luar negara", "D. Menjual hasil bumi kepada Belanda"], correctAnswer: "B" },
+                { id: 6, type: "objektif", subject: "Logik IQ", question: "Jika pola nombor ialah: 3, 7, 15, 31, 63, ... Berapakah nombor yang ke-6 dalam jujukan ini?", options: ["A. 95", "B. 125", "C. 127", "D. 129"], correctAnswer: "C" },
+                { id: 7, type: "objektif", subject: "Matematik (KBAT)", question: "Sebuah kedai memberi diskaun 20% bagi sepasang kasut berharga RM150. Sekiranya pembeli dikehendaki membayar cukai jualan 6% atas harga diskaun, berapakah jumlah bayaran akhir?", options: ["A. RM120.00", "B. RM127.20", "C. RM132.00", "D. RM141.20"], correctAnswer: "B" },
+                { id: 8, type: "objektif", subject: "Sains (KBAT)", question: "Suatu litar elektrik mempunyai 3 biji mentol yang disambung secara selari. Jika 1 mentol terbakar, apakah yang berlaku pada 2 mentol yang lain?", options: ["A. Padam sepenuhnya", "B. Menyala lebih terang daripada biasa", "C. Kekal menyala dengan kecerahan yang sama", "D. Malap sedikit"], correctAnswer: "C" },
+                { id: 9, type: "objektif", subject: "Logik IQ", question: "Semua ahli kelab robotik mahir pemrograman. Separuh daripada ahli kelab robotik menyukai catur. Manakah kesimpulan yang SAH?", options: ["A. Semua pemain catur mahir pemrograman", "B. Sebilangan individu yang menyukai catur mahir pemrograman", "C. Tiada pemain catur mahir pemrograman", "D. Semua yang mahir pemrograman ialah ahli kelab robotik"], correctAnswer: "B" },
+                { id: 10, type: "objektif", subject: "Bahasa Melayu", question: "Apakah maksud peribahasa 'Di mana ada kemahuan, di situ ada jalan' dalam konteks pembelajaran?", options: ["A. Jalan raya sentiasa terbuka untuk penunggang basikal", "B. Setiap kesukaran ilmu akan dapat diatasi jika ada tekun dan usaha", "C. Keinginan belajar memerlukan perbelanjaan yang mahal", "D. Kanak-kanak perlu selalu berjalan kaki ke sekolah"], correctAnswer: "B" },
+
+                // SUBJEKTIF (11 - 20)
+                { id: 11, type: "subjektif", subject: "Sains (KBAT)", question: "Huraikan dua perbezaan utama antara sambungan selari dan bersiri dalam litar elektrik dari segi kebolehan tenaga dan keselamatan rumah.", placeholder: "Nyatakan penjelasan perbezaan serta impaknya secara ringkas..." },
+                { id: 12, type: "subjektif", subject: "Matematik (KBAT)", question: "Sebuah taman berbentuk segiempat tepat bersaiz 12m × 8m. Di tengah taman terdapat kolam bulatan jejari 2.1m. Hitung luas kawasan berumput (Guna π = 22/7). Tunjukkan langkah pengiraan.", placeholder: "Tuliskan langkah pengiraan luas dan jawapan akhir..." },
+                { id: 13, type: "subjektif", subject: "Bahasa Melayu", question: "Gejala ketagihan gajet semakin menular dalam kalangan murid Tahun 5. Kemukakan dua cadangan kritis bagi membendung isu ini di rumah.", placeholder: "Berikan 2 cadangan berserta huraian ringkas..." },
+                { id: 14, type: "subjektif", subject: "Bahasa Inggeris", question: "Write 3 sentences evaluating the benefits of recycling plastic bottles at school.", placeholder: "Write your sentences clearly..." },
+                { id: 15, type: "subjektif", subject: "Sejarah", question: "Mengapakah perjuangan tokoh-tokoh tempatan seperti Rentap dan Mat Salleh patut dicontohi oleh generasi muda zaman moden?", placeholder: "Jelaskan nilai murni dan ikhtibar..." },
+                { id: 16, type: "subjektif", subject: "Logik IQ", question: "Empat orang murid A, B, C, D duduk sebaris. A tidak boleh duduk sebelah B. C mesti duduk di hujung kanan. Tuliskan satu susunan kedudukan yang mungkin dari kiri ke kanan.", placeholder: "Tulis susunan dan sebab ringkas..." },
+                { id: 17, type: "subjektif", subject: "Sains (KBAT)", question: "Ramalkan apakah yang akan berlaku kepada rantaian makanan beluncas-burung-helang jika populasi burung pupus secara mendadak.", placeholder: "Huraikan kesan terhadap beluncas dan helang..." },
+                { id: 18, type: "subjektif", subject: "Matematik (KBAT)", question: "Purata markah 4 orang murid ialah 82. Apabila markah murid ke-5 ditambah, purata baharu menjadi 85. Hitung markah murid ke-5 itu.", placeholder: "Tunjukkan jalan kerja pengiraan purata..." },
+                { id: 19, type: "subjektif", subject: "Teknologi & KBAT", question: "Nyatakan dua kebaikan utama penggunaan aplikasi pendidikan digital seperti Ujian IQ AI dalam memantau prestasi murid secara kendiri.", placeholder: "Berikan ulasan anda secara analitikal..." },
+                { id: 20, type: "subjektif", subject: "Logik IQ", question: "Sebuah jam dinding lewat 3 minit setiap 2 jam. Jika jam itu diselaraskan tepat pada jam 8:00 pagi, apakah waktu sebenar apabila jam itu menunjukkan 8:00 malam pada hari yang sama?", placeholder: "Hitung baki masa dan berikan jawapan waktu sebenar..." }
+            ],
+
+            "Tahun 6": [
+                // OBJEKTIF (1 - 10)
+                { id: 1, type: "objektif", subject: "Matematik (KBAT)", question: "Nisbah bilangan guli merah kepada guli biru ialah 3:5. Jika 12 biji guli merah ditambah, nisbah baharu menjadi 1:1. Berapakah bilangan asal guli biru?", options: ["A. 24", "B. 30", "C. 36", "D. 40"], correctAnswer: "B" },
+                { id: 2, type: "objektif", subject: "Sains (KBAT)", question: "Susu segar menjadi masam jika dibiarkan pada suhu bilik selama 2 hari. Mikroorganisma manakah yang bertanggungjawab dan apakah proses yang berlaku?", options: ["A. Yis - Fermentasi alkohol", "B. Bakteria - Penghasilan asid laktik", "C. Fungi - Spora pencernaan", "D. Virus - Replikasi RNA"], correctAnswer: "B" },
+                { id: 3, type: "objektif", subject: "Bahasa Melayu", question: "Pilih ayat yang mengandungi ejaan dan penggunaan kata pemeri yang tepat.", options: ["A. Antara punca utama pencemaran sungai ialah pembuangan sisa toksik.", "B. Antara punca utama pencemaran sungai adalah pembuangan sisa toksik.", "C. Adalah menjadi tanggungjawab kita untuk menjaga sungai.", "D. Ianya merupakan faktor utama kerosakan alam."], correctAnswer: "A" },
+                { id: 4, type: "objektif", subject: "Bahasa Inggeris", question: "Identify the correct conditional sentence:", options: ["A. If I have enough money, I will bought the encyclopedia.", "B. If I had studied harder, I would have passed the IQ test with distinction.", "C. If she swim fast, she wins the medal.", "D. If they comes early, we go together."], correctAnswer: "B" },
+                { id: 5, type: "objektif", subject: "Sejarah", question: "Apakah kepentingan utama Perjanjian Malaysia 1963 (MA63) dalam pembentukan negara kita?", options: ["A. Menggabungkan Tanah Melayu, Singapura, Sarawak dan Sabah", "B. Menyerahkan kedaulatan kepada pihak British", "C. Menghapuskan jawatan Yang di-Pertuan Agong", "D. Memindahkan ibu negara ke Kuching"], correctAnswer: "A" },
+                { id: 6, type: "objektif", subject: "Logik IQ", question: "Cari nombor seterusnya dalam siri: 2, 5, 11, 23, 47, ...", options: ["A. 85", "B. 95", "C. 98", "D. 101"], correctAnswer: "B" },
+                { id: 7, type: "objektif", subject: "Matematik (KBAT)", question: "Sebuah kubus kayu bersisi 6 cm dicat merah pada seluruh permukaannya. Kubus itu kemudian dipotong kepada kubus kecil bersisi 2 cm. Berapakah bilangan kubus kecil yang mempunyai HANYA 2 muka bercat merah?", options: ["A. 8", "B. 12", "C. 16", "D. 24"], correctAnswer: "B" },
+                { id: 8, type: "objektif", subject: "Sains (KBAT)", question: "Apakah bentuk tenaga yang tersimpan dalam bahan api fosil sebelum ia dibakar untuk menjana elektrik?", options: ["A. Tenaga Kinetik", "B. Tenaga Kimia", "C. Tenaga Haba", "D. Tenaga Keupayaan Graviti"], correctAnswer: "B" },
+                { id: 9, type: "objektif", subject: "Logik IQ", question: "Jika Kucing = 12, Lembu = 10, Ayam = 8, maka Kambing = ?", options: ["A. 12", "B. 14", "C. 10", "D. 16"], correctAnswer: "B" },
+                { id: 10, type: "objektif", subject: "Sejarah", question: "Negeri manakah di Malaysia yang mengamalkan Sistem Adat Perpatih dalam struktur kemasyarakatannya?", options: ["A. Perak", "B. Kedah", "C. Negeri Sembilan", "D. Terengganu"], correctAnswer: "C" },
+
+                // SUBJEKTIF (11 - 20)
+                { id: 11, type: "subjektif", subject: "Sains (KBAT)", question: "Terangkan bagaimana mikroorganisma seperti yis digunakan dalam industri pembuatan roti dan apakah gas yang dihasilkan semasa proses penapaian.", placeholder: "Huraikan peranan yis dan perubahannya..." },
+                { id: 12, type: "subjektif", subject: "Matematik (KBAT)", question: "Sebuah kereta memandu dari Bandar A ke Bandar B sejauh 240 km dengan kelajuan purata 80 km/j. Dalam perjalanan pulang, kelajuan dikurangkan kepada 60 km/j. Hitung purata kelajuan keseluruhan perjalanan (km/j).", placeholder: "Tunjukkan pengiraan jumlah masa dan kelajuan purata..." },
+                { id: 13, type: "subjektif", subject: "Bahasa Melayu", question: "Ulas peribahasa 'Berat sama dipikul, ringan sama dijunjung' dalam konteks kerjasama murid menjalankan projek sains sekolah.", placeholder: "Jelaskan maksud dan kaitan projek..." },
+                { id: 14, type: "subjektif", subject: "Bahasa Inggeris", question: "Elaborate in 3 sentences on how artificial intelligence (AI) can assist primary school students in learning mathematics.", placeholder: "Write your opinion clearly..." },
+                { id: 15, type: "subjektif", subject: "Sejarah", question: "Nyatakan dua ikhtiar tempatan dalam mempertahankan kedaulatan negara daripada ancaman kuasa luar sebelum kemerdekaan.", placeholder: "Berikan 2 ikhtiar berserta ulasan ringkas..." },
+                { id: 16, type: "subjektif", subject: "Logik IQ", question: "Ahmad lebih tua daripada Badrul. Badrul lebih muda daripada Chong tetapi lebih tua daripada Dinesh. Jika Chong lebih muda daripada Ahmad, siapakah yang Paling Muda dan Paling Tua?", placeholder: "Tulis susunan umur dan jawapan..." },
+                { id: 17, type: "subjektif", subject: "Sains (KBAT)", question: "Cadangkan satu kaedah pengawetan makanan bagi memastikan hasil tangkapan ikan nelayan tahan selama 6 bulan tanpa rosak.", placeholder: "Nyatakan nama kaedah dan prosesnya..." },
+                { id: 18, type: "subjektif", subject: "Matematik (KBAT)", question: "Sebuah tangki air berbentuk kuboid berukuran 2m × 1.5m × 1m diisi penuh air. Jika air ditarik keluar dengan kadar 50 liter seminit, berapa minitkah diambil untuk mengosongkan tangki?", placeholder: "Tunjukkan pengiraan isi padu (liter) dan masa..." },
+                { id: 19, type: "subjektif", subject: "Teknologi & KBAT", question: "Mengapakah keselamatan maklumat peribadi (seperti IC dan kata laluan) sangat penting semasa menduduki pentaksiran atas talian?", placeholder: "Kemukakan 2 alasan kritikal..." },
+                { id: 20, type: "subjektif", subject: "Logik IQ", question: "Suatu nombor 3 digit apabila dibahagi dengan 2, 3, dan 5 sentiasa memberikan baki 1. Apakah nombor terkecil yang memenuhi syarat ini?", placeholder: "Tunjukkan jalan kerja dan nombor terkecil..." }
+            ],
+
+            "Tingkatan 1": [
+                // OBJEKTIF (1 - 10)
+                { id: 1, type: "objektif", subject: "Matematik (KSSM T1)", question: "Selesaikan ungkapan algebra: 3(2x - 4y) - 2(x + 3y).", options: ["A. 4x - 18y", "B. 4x - 6y", "C. 8x - 18y", "D. 4x + 18y"], correctAnswer: "A" },
+                { id: 2, type: "objektif", subject: "Sains (KSSM T1)", question: "Manakah antara organel sel berikut yang merupakan tempat berlakunya respirasi sel untuk menghasilkan tenaga ATP?", options: ["A. Kloroplas", "B. Mitokondria", "C. Vakuol", "D. Ribosom"], correctAnswer: "B" },
+                { id: 3, type: "objektif", subject: "Bahasa Melayu", question: "Pilih ayat yang mengandungi penggunaan frasa sendi nama yang BETUL.", options: ["A. Surat itu diserahkan dari Encik Razak kepada pengetua.", "B. Mereka berbincang dari hal isu kebersihan sekolah.", "C. Kereta itu dipandu daripada Kuala Lumpur ke Ipoh.", "D. Hadiah itu adalah daripada ibu tercinta."], correctAnswer: "D" },
+                { id: 4, type: "objektif", subject: "Bahasa Inggeris", question: "Choose the option with the correct active-passive voice transformation: 'The librarian organized the books on the shelf.'", options: ["A. The books were organized by the librarian on the shelf.", "B. The books are organized by the librarian on the shelf.", "C. The librarian was organizing the books.", "D. On the shelf organized the books by librarian."], correctAnswer: "A" },
+                { id: 5, type: "objektif", subject: "Sejarah", question: "Apakah ikhtiar strategik Kesultanan Melayu Melaka dalam menjamin keselamatan pelayaran pedagang di Selat Melaka?", options: ["A. Membina kubu di semua pulau", "B. Menubuhkan perkhidmatan Laksamana dan Orang Laut", "C. Meminta ufti daripada pedagang Barat", "D. Menutup pelabuhan pada musim tengkujuh"], correctAnswer: "B" },
+                { id: 6, type: "objektif", subject: "Logik IQ", question: "Selesaikan persamaan: Jika 2^x = 32 dan 3^y = 81, berapakah nilai x² + y²?", options: ["A. 25", "B. 36", "C. 41", "D. 49"], correctAnswer: "C" },
+                { id: 7, type: "objektif", subject: "Matematik (KBAT)", question: "Sudut-sudut dalam sebuah segi tiga berada dalam nisbah 2:3:4. Berapakah saiz sudut terbesar segi tiga tersebut?", options: ["A. 40°", "B. 60°", "C. 80°", "D. 100°"], correctAnswer: "C" },
+                { id: 8, type: "objektif", subject: "Sains (KBAT)", question: "Apakah faktor utama yang menyebabkan ketumpatan ais lebih rendah berbanding air dalam bentuk cecair?", options: ["A. Susunan molekul air membentuk struktur hablur terbuka pada 0°C", "B. Ais kehilangan jisim atom hidrogen", "C. Udara terperangkap dalam ikatan kovalen", "D. Tekanan atmosfera menolak ais ke atas"], correctAnswer: "A" },
+                { id: 9, type: "objektif", subject: "Logik IQ", question: "Satu urutan huruf: A, C, F, J, O, ... Apakah huruf seterusnya?", options: ["A. R", "B. S", "C. T", "D. U"], correctAnswer: "D" },
+                { id: 10, type: "objektif", subject: "Geografi", question: "Bentuk muka bumi manakah yang terhasil akibat daripada proses pemendapan sungai di peringkat muara?", options: ["A. Air terjun", "B. Tasik ladam", "C. Delta", "D. Jurang S"], correctAnswer: "C" },
+
+                // SUBJEKTIF (11 - 20)
+                { id: 11, type: "subjektif", subject: "Sains (KSSM T1)", question: "Jelaskan perbezaan utama antara proses fotosintesis dan respirasi sel dari segi bahan tindak balas, hasil, dan tenaga.", placeholder: "Tuliskan jadual/perenggan perbandingan ringkas..." },
+                { id: 12, type: "subjektif", subject: "Matematik (KBAT)", question: "Diberi ketaksamaan 3x - 5 ≤ 7 + x. Selesaikan nilai x dan wakilkan penyelesaian tersebut secara bertulis.", placeholder: "Tunjukkan pengiraan selangkah demi selangkah..." },
+                { id: 13, type: "subjektif", subject: "Bahasa Melayu", question: "Ulas peranan remaja dalam memelihara warisan sejarah tanah air agar tidak ditelan zaman.", placeholder: "Berikan 2 peranan berserta ulasan KBAT..." },
+                { id: 14, type: "subjektif", subject: "Bahasa Inggeris", question: "Write a short paragraph (3-4 sentences) discussing the impact of social media on teenage mental health.", placeholder: "Write your analysis clearly..." },
+                { id: 15, type: "subjektif", subject: "Sejarah", question: "Nilaikan kualiti kepimpinan Sultan Muzaffar Shah yang menyebabkan Kesultanan Melayu Melaka mencapai zaman kegemilangan.", placeholder: "Terangkan 2 faktor kepimpinan..." },
+                { id: 16, type: "subjektif", subject: "Logik IQ", question: "Sebuah lif bergerak naik dari tingkat G ke tingkat 10. Selepas itu turun 4 tingkat, naik 7 tingkat dan turun 5 tingkat. Di tingkat manakah lif itu berada sekarang?", placeholder: "Tunjukkan langkah matematik ringkas..." },
+                { id: 17, type: "subjektif", subject: "Sains (KBAT)", question: "Mengapakah tindak balas haba eksotermik menyebabkan suhu persekitaran meningkat manakala endotermik menurunkan suhu?", placeholder: "Huraikan dari segi penyerapan/pembebasan haba..." },
+                { id: 18, type: "subjektif", subject: "Matematik (KBAT)", question: "Sebuah segi tiga bersudut tegak mempunyai panjang tapak (x + 2) cm dan tinggi 8 cm. Jika luasnya ialah 36 cm², cari nilai x.", placeholder: "Tunjukkan formula luas dan pengiraan nilai x..." },
+                { id: 19, type: "subjektif", subject: "RBT & KBAT", question: "Nyatakan dua kepentingan penggunaan lakaran piktorial dalam proses mereka bentuk produk baharu.", placeholder: "Berikan ulasan teknikal ringkas..." },
+                { id: 20, type: "subjektif", subject: "Logik IQ", question: "Cari dua nombor positif di mana jumlahnya ialah 25 dan hasil darabnya memberikan nilai maksimum yang mungkin. Nyatakan nombor-nombor itu.", placeholder: "Tunjukkan jawapan dan analisis ringkas..." }
+            ],
+
+            "Tingkatan 2": [
+                // OBJEKTIF (1 - 10)
+                { id: 1, type: "objektif", subject: "Matematik (KSSM T2)", question: "Hitung lilitan bagi sebuah bulatan (dalam cm) yang mempunyai luas 154 cm². (Guna π = 22/7)", options: ["A. 22 cm", "B. 44 cm", "C. 66 cm", "D. 88 cm"], correctAnswer: "B" },
+                { id: 2, type: "objektif", subject: "Sains (KSSM T2)", question: "Apakah fungsi cecair hempedu yang dihasilkan oleh hati dalam sistem pencernaan manusia?", options: ["A. Mencerna protein menjadi asid amino", "B. Mengemulsi lemak menjadi titisan kecil", "C. Menetralkan glukosa dalam darah", "D. Membunuh bakteria dalam usus besar"], correctAnswer: "B" },
+                { id: 3, type: "objektif", subject: "Bahasa Melayu", question: "Pilih ayat yang menggunakan peribahasa 'Seperti hujan jatuh ke pasir' secara tepat.", options: ["A. Bantuan wang itu sangat berguna kepada mangsa banjir.", "B. Nasihat yang diberikan oleh bapa langsung tidak dihiraukan oleh si anak.", "C. Pekerja itu dipuji kerana menyelesaikan tugas dengan cepat.", "D. Tanaman di kebun itu subur selepas disiram hujan."], correctAnswer: "B" },
+                { id: 4, type: "objektif", subject: "Bahasa Inggeris", question: "Choose the correct vocabulary word: 'The scientist conducted an __________ study to analyze the long-term effects of global warming.'", options: ["A. exhaustive", "B. exhausting", "C. expired", "D. explicit"], correctAnswer: "A" },
+                { id: 5, type: "objektif", subject: "Sejarah", question: "Apakah faktor utama yang mendorong kedatangan kuasa Barat (seperti Portugis dan Belanda) ke Alam Melayu pada abad ke-16?", options: ["A. Menjual barangan perkilangan industri", "B. Menguasai perdagangan rempah-ratus dan laluan maritim", "C. Membina sistem perkeretapian", "D. Membantu pentadbiran tempatan"], correctAnswer: "B" },
+                { id: 6, type: "objektif", subject: "Logik IQ", question: "Jika A * B bermaksud (A × B) + (A - B), berapakah nilai bagi 6 * 4?", options: ["A. 22", "B. 24", "C. 26", "D. 28"], correctAnswer: "C" },
+                { id: 7, type: "objektif", subject: "Matematik (KBAT)", question: "Kecerunan satu garis lurus yang lalu melalui titik P(2, 5) dan Q(6, k) ialah 3. Berapakah nilai k?", options: ["A. 11", "B. 14", "C. 17", "D. 20"], correctAnswer: "C" },
+                { id: 8, type: "objektif", subject: "Sains (KBAT)", question: "Mengapakah tekanan udara di puncak Gunung Kinabalu lebih rendah berbanding di aras laut?", options: ["A. Jumlah molekul udara berkurangan di altitud tinggi", "B. Suhu di puncak gunung terlalu sejuk", "C. Tarikan graviti di puncak gunung bertambah", "D. Angin kencang menolak atmosfera keluar"], correctAnswer: "A" },
+                { id: 9, type: "objektif", subject: "Logik IQ", question: "Berapakah bilangan segi tiga yang terdapat dalam bentuk pentagram (bintang 5 bucu)?", options: ["A. 5", "B. 8", "C. 10", "D. 12"], correctAnswer: "C" },
+                { id: 10, type: "objektif", subject: "Geografi", question: "Apakah jenis iklim yang dialami oleh Malaysia dan apakah ciri utamanya?", options: ["A. Iklim Monsun Tropika - Kering sepanjang tahun", "B. Iklim Khatulistiwa - Panas dan lembap sepanjang tahun", "C. Iklim Mediterranean - Musim panas yang sejuk", "D. Iklim Tundra - Bersalji"], correctAnswer: "B" },
+
+                // SUBJEKTIF (11 - 20)
+                { id: 11, type: "subjektif", subject: "Sains (KSSM T2)", question: "Jelaskan mekanisme tindakan antibodi dan sel darah putih dalam mempertahankan tubuh badan daripada serangan patogen virus.", placeholder: "Huraikan proses keimunan sel darah..." },
+                { id: 12, type: "subjektif", subject: "Matematik (KBAT)", question: "Sebuah silinder mempunyai jejari 7 cm dan tinggi 10 cm. Jika silinder tersebut dileburkan untuk membentuk hemisfera bersaiz sama, hitung isi padu silinder itu (cm³). (Guna π = 22/7)", placeholder: "Tunjukkan jalan kerja isi padu..." },
+                { id: 13, type: "subjektif", subject: "Bahasa Melayu", question: "Bincangkan dua langkah strategik pihak sekolah bagi memupuk minat membaca karya sastera dalam kalangan generasi muda digital.", placeholder: "Tuliskan 2 cadangan kritis..." },
+                { id: 14, type: "subjektif", subject: "Bahasa Inggeris", question: "Analyse the causes of water pollution in urban rivers and suggest two sustainable community solutions.", placeholder: "Provide your critical analysis..." },
+                { id: 15, type: "subjektif", subject: "Sejarah", question: "Mengapakah kebijaksanaan diplomasi pemerintah tempatan penting semasa menghadapi tekanan imperialisme Barat pada abad ke-19?", placeholder: "Jelaskan aspek diplomasi dan ikhtibar..." },
+                { id: 16, type: "subjektif", subject: "Logik IQ", question: "Satu cermin menunjukkan masa 03:40. Apakah waktu sebenar pada jam analog tersebut?", placeholder: "Hitung waktu pantulan cermin..." },
+                { id: 17, type: "subjektif", subject: "Sains (KBAT)", question: "Terangkan bagaimana cermin cekung digunakan dalam aplikasi perubatan pergigian dan pemantul lampu depan kereta.", placeholder: "Huraikan ciri pantulan cahaya..." },
+                { id: 18, type: "subjektif", subject: "Matematik (KBAT)", question: "Dalam satu kelas 40 murid, 25 murid menyukai Matematik, 20 menyukai Sains, dan 5 tidak menyukai mana-mana subjek. Cari bilangan murid yang menyukai KEDUA-DUA subjek.", placeholder: "Tunjukkan pengiraan Set Venn..." },
+                { id: 19, type: "subjektif", subject: "RBT & KBAT", question: "Nyatakan dua kelebihan sistem akuaponik dalam sektor pertanian moden berbanding pertanian tradisional.", placeholder: "Kemukakan 2 kelebihan teknikal..." },
+                { id: 20, type: "subjektif", subject: "Logik IQ", question: "Sebuah kolam renang diisi penuh oleh Paip A dalam masa 4 jam dan Paip B dalam masa 6 jam. Jika kedua-dua paip dibuka serentak, berapa jamkah diambil?", placeholder: "Tunjukkan pengiraan kadar kerja..." }
+            ],
+
+            "Tingkatan 3": [
+                // OBJEKTIF (1 - 10)
+                { id: 1, type: "objektif", subject: "Matematik (KSSM T3)", question: "Nilaikan (2.4 × 10⁵) × (5.0 × 10⁻²) dalam bentuk piawai.", options: ["A. 1.2 × 10⁴", "B. 1.2 × 10³", "C. 12 × 10³", "D. 1.2 × 10⁵"], correctAnswer: "A" },
+                { id: 2, type: "objektif", subject: "Sains (KSSM T3)", question: "Organ manakah yang bertanggungjawab menghasilkan hormon insulin bagi mengawal aras glukosa darah?", options: ["A. Hati", "B. Pankreas", "C. Ginjal", "D. Tiroid"], correctAnswer: "B" },
+                { id: 3, type: "objektif", subject: "Bahasa Melayu", question: "Antara berikut, yang manakah ayat majmuk campuran yang gramatis?", options: ["A. Amin memenangi perlumbaan itu kerana dia berlatih setiap hari.", "B. Ibu memasak di dapur manakala bapa membaca surat khabar.", "C. Pelajar yang rajin itu sedang membaca buku manakala rakan-rakannya berhati-hati menyiapkan tugasan.", "D. Kereta itu sangat cepat."], correctAnswer: "C" },
+                { id: 4, type: "objektif", subject: "Bahasa Inggeris", question: "Select the sentence with correct subject-verb agreement:", options: ["A. Neither the teacher nor the students were aware of the change.", "B. Each of the participants are getting a certificate.", "C. Every boy and girl have to register.", "D. The group of research scientists are presenting today."], correctAnswer: "A" },
+                { id: 5, type: "objektif", subject: "Sejarah", question: "Apakah ikhtiar utama Majlis Mesyuarat Persekutuan 1909 dalam pentadbiran Negeri-negeri Melayu Bersekutu?", options: ["A. Mengurangkan kuasa Sultan dan memusatkan pentadbiran di tangan Pesuruhjaya Tinggi British", "B. Mengembalikan kedaulatan tempatan sepenuh masa", "C. Menyerahkan pentadbiran kepada Jepun", "D. Membubarkan Jabatan Kerja Raya"], correctAnswer: "A" },
+                { id: 6, type: "objektif", subject: "Logik IQ", question: "Jika tan θ = 3/4 dalam segi tiga bersudut tegak, berapakah nilai sin θ + kos θ?", options: ["A. 7/5", "B. 5/7", "C. 1", "D. 12/25"], correctAnswer: "A" },
+                { id: 7, type: "objektif", subject: "Matematik (KBAT)", question: "Encik Lee menyimpan RM10,000 dalam akaun simpanan tetap dengan faedah kompaun 4% setahun dikompaunkan setiap setengah tahun. Hitung jumlah simpanan selepas 1 tahun.", options: ["A. RM10,400.00", "B. RM10,404.00", "C. RM10,800.00", "D. RM10,408.00"], correctAnswer: "B" },
+                { id: 8, type: "objektif", subject: "Sains (KBAT)", question: "Apakah yang berlaku kepada sinaran радиоaktif alfa (α) apabila lalu di antara dua plat bercas elektrik positif dan negatif?", options: ["A. Terpesong ke arah plat positif", "B. Terpesong ke arah plat negatif", "C. Bergerak lurus tanpa terpesong", "D. Diserap sepenuhnya oleh udara"], correctAnswer: "B" },
+                { id: 9, type: "objektif", subject: "Logik IQ", question: "Diberi log₁₀ 2 = 0.301 dan log₁₀ 3 = 0.477. Nilaikan log₁₀ 12.", options: ["A. 0.778", "B. 1.079", "C. 1.255", "D. 0.903"], correctAnswer: "B" },
+                { id: 10, type: "objektif", subject: "Sejarah", question: "Apakah ikhtibar utama daripada peristiwa penentangan Penasihat British di Perak (J.W.W. Birch)?", options: ["A. Pentingnya perpaduan dan menghormati adat budaya tempatan", "B. Rakyat tidak perlu mempertahankan hak", "C. British sentiasa membawa keadilan", "D. Sistem cukai luar mesti diterima bulat-bulat"], correctAnswer: "A" },
+
+                // SUBJEKTIF (11 - 20)
+                { id: 11, type: "subjektif", subject: "Sains (KSSM T3)", question: "Huraikan perbezaan antara sinaran mengion (seperti sinar-X) dan sinaran tidak mengion dari segi kesan ke atas sel tisu biologi manusia.", placeholder: "Huraikan kesan terhadap DNA dan sel..." },
+                { id: 12, type: "subjektif", subject: "Matematik (KBAT)", question: "Sebuah segi tiga PQR bersudut tegak di Q. Diberi PQ = 12 cm dan PR = 13 cm. Nilaikan tan ∠QPR dan hitung luas segi tiga PQR.", placeholder: "Tunjukkan pengiraan Teorem Pythagoras & tan..." },
+                { id: 13, type: "subjektif", subject: "Bahasa Melayu", question: "Nilaikan langkah-langkah menangani masalah pembuangan sisa plastik di kawasan perindustrian tempatan.", placeholder: "Nyatakan 2 cadangan berserta analisis KBAT..." },
+                { id: 14, type: "subjektif", subject: "Bahasa Inggeris", question: "Evaluate the pros and cons of implementing renewable solar energy in Malaysian schools.", placeholder: "Discuss benefits and challenges..." },
+                { id: 15, type: "subjektif", subject: "Sejarah", question: "Jelaskan peranan Sistem Residen dalam mengubah struktur ekonomi dan sosial Tanah Melayu pada akhir abad ke-19.", placeholder: "Terangkan 2 kesan ekonomi/sosial..." },
+                { id: 16, type: "subjektif", subject: "Logik IQ", question: "Berapakah jumlah integer di antara 1 hingga 200 yang boleh dibahagi tepat oleh 3 atau 5?", placeholder: "Tunjukkan prinsip Inklusi-Eksklusi..." },
+                { id: 17, type: "subjektif", subject: "Sains (KBAT)", question: "Terangkan fenomena pemutihan terumbu karang (coral bleaching) akibat peningkatan suhu lautan global.", placeholder: "Jelaskan hubungan simbiosis alga & karang..." },
+                { id: 18, type: "subjektif", subject: "Matematik (KBAT)", question: "Diberi garis lurus 2y - 3x = 8. Cari kecerunan garis ini dan koordinat pintasan-x.", placeholder: "Tunjukkan persamaan dalam bentuk y = mx + c..." },
+                { id: 19, type: "subjektif", subject: "RBT & KBAT", question: "Huraikan fungsi mikropengawal (microcontroller) dalam mereka bentuk sistem penyiraman pokok automatik.", placeholder: "Jelaskan fungsi sensor dan kod..." },
+                { id: 20, type: "subjektif", subject: "Logik IQ", question: "Satu beg mengandungi 5 bola merah, 3 bola hijau, dan 2 bola biru. Dua bola ditarik secara rawak tanpa pemulangan. Hitung kebarangkalian kedua-dua bola berwarna MERAH.", placeholder: "Tunjukkan pengiraan kebarangkalian..." }
+            ],
+
+            "Tingkatan 4": [
+                // OBJEKTIF (1 - 10)
+                { id: 1, type: "objektif", subject: "Matematik (KSSM T4)", question: "Selesaikan persamaan kuadratik: 2x² - 7x + 3 = 0.", options: ["A. x = 3, x = 1/2", "B. x = -3, x = -1/2", "C. x = 6, x = 1", "D. x = 2, x = 3"], correctAnswer: "A" },
+                { id: 2, type: "objektif", subject: "Fizik (KSSM T4)", question: "Sebuah kereta bergerak dengan halaju awal 10 m/s dan memecut secara seragam pada 2 m/s² selama 5 saat. Berapakah sesaran yang dilalui?", options: ["A. 50 m", "B. 75 m", "C. 100 m", "D. 125 m"], correctAnswer: "B" },
+                { id: 3, type: "objektif", subject: "Kimia (KSSM T4)", question: "Berapakah bilangan mol atom hidrogen yang terdapat dalam 0.5 mol molekul air (H₂O)?", options: ["A. 0.5 mol", "B. 1.0 mol", "C. 1.5 mol", "D. 2.0 mol"], correctAnswer: "B" },
+                { id: 4, type: "objektif", subject: "Biologi (KSSM T4)", question: "Apakah fasa dalam pembahagian sel mitosis di mana kromosom tersusun di satah khatulistiwa sel?", options: ["A. Profasa", "B. Metafasa", "C. Anafasa", "D. Telofasa"], correctAnswer: "B" },
+                { id: 5, type: "objektif", subject: "Sejarah (SPM)", question: "Apakah ikhtiar perjuangan Kesatuan Melayu Muda (KMM) pimpinan Ibrahim Haji Yaacob?", options: ["A. Menuntut kemerdekaan menerusi konsep Melayu Raya", "B. Menyokong pentadbiran British sepenuhnya", "C. Meminta bantuan kewangan PBB", "D. Menolak gabungan dengan Indonesia"], correctAnswer: "A" },
+                { id: 6, type: "objektif", subject: "Logik IQ", question: "Diberi matriks A = [[2, 3], [1, 4]]. Hitung penentu (determinant) bagi matriks A.", options: ["A. 5", "B. 8", "C. 11", "D. 14"], correctAnswer: "A" },
+                { id: 7, type: "objektif", subject: "Matematik (KBAT)", question: "Graf fungsi kuadratik f(x) = -x² + 4x + k mempunyai titik maksimum (2, 9). Berapakah nilai pintasan-y k?", options: ["A. 5", "B. 9", "C. 13", "D. -5"], correctAnswer: "A" },
+                { id: 8, type: "objektif", subject: "Bahasa Melayu", question: "Manakah antara berikut menggunakan teknik wacana dramatik yang berkesan dalam penulisan karangan syarahan?", options: ["A. Persoalannya, siapakah yang bakal mencorak masa depan negara jika bukan kita?", "B. Karangan ini bercakap tentang ekonomi.", "C. Saya ingin beritahu tentang masalah.", "D. Kerajaan perlu buat kerja."], correctAnswer: "A" },
+                { id: 9, type: "objektif", subject: "Bahasa Inggeris", question: "Choose the word closest in meaning to 'UBIQUITOUS':", options: ["A. Rare and scarce", "B. Present everywhere", "C. Highly dangerous", "D. Ancient and obsolete"], correctAnswer: "B" },
+                { id: 10, type: "objektif", subject: "Perniagaan / Ekonomi", question: "Apakah jenis milikan perniagaan yang mempunyai liabiliti tidak terhad dan ditubuhkan oleh 2 hingga 20 orang rakan?", options: ["A. Milikan Tunggal", "B. Perkongsian", "C. Syarikat Sendirian Berhad", "D. Koperasi"], correctAnswer: "B" },
+
+                // SUBJEKTIF (11 - 20)
+                { id: 11, type: "subjektif", subject: "Fizik (KSSM T4)", question: "Terangkan Hukum Gerakan Newton Kedua (F = ma) dan berikan contoh aplikasi dalam mereka bentuk zon kemek (crumple zone) kereta.", placeholder: "Huraikan daya impuls dan masa perlanggaran..." },
+                { id: 12, type: "subjektif", subject: "Matematik (KBAT)", question: "Graf fungsi kuadratik y = ax² + bx + c melalui titik (0, 3), (1, 6), dan (-1, 2). Selesaikan sistem persamaan linear untuk mencari nilai a, b, dan c.", placeholder: "Tunjukkan pengiraan nilai a, b, c..." },
+                { id: 13, type: "subjektif", subject: "Kimia (KSSM T4)", question: "Jelaskan pembentukan ikatan kovalen dalam molekul metana (CH₄) dari segi perkongsian elektron valens.", placeholder: "Terangkan konfigurasi elektron duplet/oktet..." },
+                { id: 14, type: "subjektif", subject: "Biologi (KSSM T4)", question: "Huraikan proses pencernaan enzim di dalam perut dan usus kecil bagi makanan yang kaya dengan protein.", placeholder: "Nyatakan enzim pepsin, tripsin dan produknya..." },
+                { id: 15, type: "subjektif", subject: "Sejarah (SPM)", question: "Bincangkan ikhtibar daripada Peristiwa Penyerahan Sarawak 1946 terhadap semangat nasionalisme tempatan.", placeholder: "Terangkan 2 faktor gerakan penentangan..." },
+                { id: 16, type: "subjektif", subject: "Logik IQ", question: "Satu punca bagi persamaan kuadratik x² - kx + 12 = 0 ialah dua kali ganda punca yang satu lagi. Cari nilai-nilai k yang mungkin.", placeholder: "Gunakan α dan 2α untuk mencari k..." },
+                { id: 17, type: "subjektif", subject: "Bahasa Melayu", question: "Kemukakan tiga huraian kritis tentang usaha memperkasakan sektor pelancongan domestik dalam era pascapandemik.", placeholder: "Tuliskan 3 isi utama berserta contoh..." },
+                { id: 18, type: "subjektif", subject: "Bahasa Inggeris", question: "Write a short argumentative paragraph evaluating whether automated artificial intelligence should replace human job recruiters.", placeholder: "Write your thesis and reasoning..." },
+                { id: 19, type: "subjektif", subject: "Ekonomi / KBAT", question: "Terangkan kesan inflasi tarikan permintaan (demand-pull inflation) terhadap kuasa beli pengguna dan tindakan Bank Negara Malaysia.", placeholder: "Jelaskan kadar faedah dan kuasa beli..." },
+                { id: 20, type: "subjektif", subject: "Logik IQ", question: "Diberi siri geometri 4, 12, 36, 108, ... Hitung jumlah 7 sebutan pertama (S₇) bagi siri ini.", placeholder: "Tunjukkan formula S_n = a(r^n - 1)/(r - 1)..." }
+            ],
+
+            "Tingkatan 5": [
+                // OBJEKTIF (1 - 10)
+                { id: 1, type: "objektif", subject: "Matematik Tambahan (AddMath T5)", question: "Cari pembezaan pertama dy/dx bagi fungsi y = (3x² - 2)⁴.", options: ["A. 24x(3x² - 2)³", "B. 12x(3x² - 2)³", "C. 4(6x)³", "D. 24x²(3x² - 2)³"], correctAnswer: "A" },
+                { id: 2, type: "objektif", subject: "Fizik (KSSM T5)", question: "Apakah fenomena gelombang yang membolehkan gelombang radio membelok di sekeliling bukit atau halangan?", options: ["A. Pantulan", "B. Pembiasan", "C. Penyerakan", "D. Pembelauan"], correctAnswer: "D" },
+                { id: 3, type: "objektif", subject: "Kimia (KSSM T5)", question: "Dalam sel elektrokimia (sel voltan), proses apakah yang berlaku di anod?", options: ["A. Pengoksidaan (kehilangan elektron)", "B. Penurunan (penerimaan elektron)", "C. Peneutralan asid", "D. Pengendapan garam"], correctAnswer: "A" },
+                { id: 4, type: "objektif", subject: "Biologi (KSSM T5)", question: "Apakah nama teknologi pembiakan di mana gen spesifik dimasukkan ke dalam genom organisma untuk menghasilkan Organisma Diubah Serta Genetik (GMO)?", options: ["A. Kloning Tisu", "B. Kejuruteraan Genetik", "C. In Vitro Fertilization", "D. Terapi Kimia"], correctAnswer: "B" },
+                { id: 5, type: "objektif", subject: "Sejarah (SPM T5)", question: "Apakah teras utama Dasar Kebudayaan Kebangsaan yang digubal pada tahun 1971?", options: ["A. Berteraskan kebudayaan rakyat asal rantau ini", "B. Mengabaikan unsur kebudayaan lain", "C. Meniru kebudayaan Barat sepenuhnya", "D. Diberikan kebebasan tanpa syarat"], correctAnswer: "A" },
+                { id: 6, type: "objektif", subject: "Logik IQ / AddMath", question: "Nilaikan pengamiran tertentu: ∫₁³ (3x² + 2x) dx.", options: ["A. 32", "B. 34", "C. 36", "D. 38"], correctAnswer: "B" },
+                { id: 7, type: "objektif", subject: "Matematik (KBAT)", question: "Kebarangkalian seorang calon lulus SPM Ujian IQ ialah 0.8. Jika 3 orang calon dipilih secara rawak, berapakah kebarangkalian HANYA 2 orang calon yang lulus?", options: ["A. 0.384", "B. 0.512", "C. 0.096", "D. 0.256"], correctAnswer: "A" },
+                { id: 8, type: "objektif", subject: "Bahasa Melayu", question: "Antara peribahasa berikut, yang manakah mempunya maksud yang seerti dengan 'Sedia payung sebelum hujan'?", options: ["A. Berjalan pelan-pelan asal selamat", "B. Ingat sebelum kena, jimat sebelum habis", "C. Air dicincang tidak akan putus", "D. Bagai aur dengan tebing"], correctAnswer: "B" },
+                { id: 9, type: "objektif", subject: "Bahasa Inggeris", question: "Identify the correct vocabulary: 'The diplomatic summit aimed to __________ peaceful resolution between the conflicting nations.'", options: ["A. exacerbate", "B. facilitate", "C. procrastinate", "D. Deteriorate"], correctAnswer: "B" },
+                { id: 10, type: "objektif", subject: "Ekonomi SPM", question: "Apakah peranan utama Bank Negara Malaysia dalam mengawal inflasi menerusi Dasar Kewangan Menguncup?", options: ["A. Menurunkan nisbah rizab berkanun", "B. Menjual surat jaminan kerajaan dan menaikkan kadar faedah", "C. Membeli aset hartanah", "D. Mencetak wang tanpa had"], correctAnswer: "B" },
+
+                // SUBJEKTIF (11 - 20)
+                { id: 11, type: "subjektif", subject: "Fizik (KSSM T5)", question: "Terangkan prinsip kerja transformer injak turun (step-down transformer) dan punca kehilangan tenaga dalam teras besi boleh diatasi.", placeholder: "Huraikan arus pusar dan teras berlamina..." },
+                { id: 12, type: "subjektif", subject: "AddMath (KBAT)", question: "Diberi fungsi y = x³ - 3x² + 5. Cari titik pegun (stationary points) bagi lengkung ini dan tentukan sifat titik tersebut (maksimum atau minimum).", placeholder: "Tunjukkan dy/dx = 0 dan d²y/dx²..." },
+                { id: 13, type: "subjektif", subject: "Kimia (KSSM T5)", question: "Bandingkan kadar tindak balas antara ketulan guli zink dengan serbuk zink apabila bertindak balas dengan asid hidroklorik cair dari segi Teori Perlanggaran.", placeholder: "Huraikan luas permukaan dan frekuensi perlanggaran berkesan..." },
+                { id: 14, type: "subjektif", subject: "Biologi (KSSM T5)", question: "Jelaskan Hukum Pewarisan Mendel Pertama menggunakan rajah skema kacukan monohibrid bagi ciri tinggi pokok kacang pea (Tt × Tt).", placeholder: "Tunjukkan fenotip dan genotip F1..." },
+                { id: 15, type: "subjektif", subject: "Sejarah (SPM T5)", question: "Nilaikan keberkesanan Dasar Ekonomi Baru (DEB) dalam membasmi kemiskinan dan menyusun semula masyarakat di Malaysia.", placeholder: "Analisis pencapaian DEB dan ikhtibar..." },
+                { id: 16, type: "subjektif", subject: "Logik IQ", question: "Satu vektor v = 3i - 4j. Hitung magnitud vektor v dan cari vektor unit dalam arah v.", placeholder: "Tunjukkan pengiraan magnitud dan u_v..." },
+                { id: 17, type: "subjektif", subject: "Bahasa Melayu", question: "Huraikan peranan Bahasa Melayu sebagai bahasa ilmu dan bahasa perpaduan dalam membina bangsa Malaysia yang berdaya saing.", placeholder: "Tuliskan 3 isi wacana ilmiah..." },
+                { id: 18, type: "subjektif", subject: "Bahasa Inggeris", question: "Write a short critical essay evaluating the ethical implications of genetic engineering in human embryos.", placeholder: "Evaluate ethics, safety, and moral concerns..." },
+                { id: 19, type: "subjektif", subject: "Ekonomi / KBAT", question: "Bincangkan bagaimana nilai pertukaran mata wang Ringgit Malaysia (MYR) dipengaruhi oleh kadar eksport-import negara.", placeholder: "Jelaskan permintaan dan penawaran mata wang..." },
+                { id: 20, type: "subjektif", subject: "Logik IQ / AddMath", question: "Cari luas rantau yang dibatasi oleh lengkung y = x² dan garis lurus y = 4 pada sukuan pertama.", placeholder: "Tunjukkan pengiraan pengamiran ∫ x² dx..." }
+            ]
+        };
+
+        // Pilihan Grade
+        function selectGrade(gradeName) {
+            userData.grade = gradeName;
+            document.getElementById('selectedGradeInput').value = gradeName;
+
+            const btns = document.querySelectorAll('.grade-btn');
+            btns.forEach(btn => {
+                if (btn.innerText.trim() === gradeName) {
+                    btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                    btn.classList.remove('border-slate-200', 'hover:bg-blue-50');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                    btn.classList.add('border-slate-200', 'hover:bg-blue-50');
+                }
+            });
+        }
+
+        // Mula Ujian
+        function handleStartTest(e) {
+            e.preventDefault();
+
+            if (!userData.grade) {
+                showCustomModal('Sila Pilih Tahap Persekolahan', 'Sila tekan salah satu butang Tahun 5, Tahun 6, atau Tingkatan 1 - 5 terlebih dahulu.');
+                return;
+            }
+
+            userData.nama = document.getElementById('inputNama').value.trim();
+            userData.ic = document.getElementById('inputIC').value.trim();
+            userData.noGiliran = document.getElementById('inputNoGiliran').value.trim();
+            userData.jenisSekolah = document.getElementById('inputJenisSekolah').value;
+            userData.namaSekolah = document.getElementById('inputNamaSekolah').value.trim();
+            userData.lokasi = document.getElementById('inputLokasi').value.trim();
+            userData.jarak = document.getElementById('inputJarak').value.trim();
+
+            if (!userData.nama || !userData.ic || !userData.noGiliran || !userData.jenisSekolah || !userData.namaSekolah || !userData.lokasi || !userData.jarak) {
+                showCustomModal('Maklumat Tidak Lengkap', 'Sila isi kesemua ruangan borang pendaftaran dengan teliti.');
+                return;
+            }
+
+            // Muatkan soalan khusus ikut pilihan grade
+            questionsList = dbQuestionsByGrade[userData.grade] || dbQuestionsByGrade["Tahun 6"];
+            userAnswers = {};
+            currentPage = 0;
+
+            // Kemaskini Paparan Header Ujian
+            document.getElementById('displayCandidateName').innerText = userData.nama;
+            document.getElementById('displayCandidateMeta').innerText = `${userData.grade} • ${userData.namaSekolah} (${userData.jenisSekolah})`;
+
+            // Tukar Seksyen UI
+            document.getElementById('stepRegister').classList.add('hidden');
+            document.getElementById('stepTest').classList.remove('hidden');
+            document.getElementById('headerStatus').classList.remove('hidden');
+
+            // Mulakan Pemasa 1 Jam 15 Minit
+            startTimer();
+
+            // Render Soalan & Palette
+            renderPageQuestions();
+            renderPaletteGrid();
+            updateAnswerStats();
+        }
+
+        function startTimer() {
+            timeRemainingSeconds = 75 * 60; // 1 Jam 15 Minit (75 Minit)
+            updateTimerDisplay();
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                timeRemainingSeconds--;
+                updateTimerDisplay();
+
+                if (timeRemainingSeconds <= 300) { // Kurang 5 Minit amaran merah
+                    document.getElementById('timerBadge').classList.add('bg-red-700', 'text-white', 'animate-pulse');
+                }
+
+                if (timeRemainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    showCustomModal('Masa Menjawab Tamat', 'Masa 1 Jam 15 Minit telah tamat. Sistem akan menghantar jawapan anda secara automatik untuk penilaian AI.');
+                    processSubmitToAI();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const hrs = Math.floor(timeRemainingSeconds / 3600);
+            const mins = Math.floor((timeRemainingSeconds % 3600) / 60);
+            const secs = timeRemainingSeconds % 60;
+
+            const pad = (num) => String(num).padStart(2, '0');
+            document.getElementById('timerDisplay').innerText = `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+        }
+
+        function renderPageQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            const startIndex = currentPage * 5;
+            const endIndex = Math.min(startIndex + 5, questionsList.length);
+
+            document.getElementById('pageIndicator').innerText = `Soalan ${startIndex + 1} - ${endIndex} dari ${questionsList.length}`;
+
+            document.getElementById('btnPrevPage').disabled = (currentPage === 0);
+            document.getElementById('btnNextPage').disabled = (endIndex >= questionsList.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const q = questionsList[i];
+                const qNum = i + 1;
+                const isObj = q.type === "objektif";
+
+                const qCard = document.createElement('div');
+                qCard.className = "bg-white p-6 sm:p-7 rounded-2xl shadow-md border border-slate-200 transition-all hover:shadow-lg space-y-4";
+                qCard.id = `qCard_${qNum}`;
+
+                let optionsHTML = '';
+
+                if (isObj) {
+                    const selectedVal = userAnswers[qNum] || '';
+                    optionsHTML = `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            ${q.options.map((opt, optIdx) => {
+                                const letter = opt.charAt(0); // A, B, C, D
+                                const isSelected = (selectedVal === letter);
+                                return `
+                                    <button type="button" onclick="recordAnswer(${qNum}, '${letter}')" 
+                                        class="opt-btn-${qNum} text-left p-3.5 rounded-xl border-2 font-medium text-xs sm:text-sm transition-all flex items-center justify-between gap-2
+                                        ${isSelected ? 'bg-emerald-600 text-white border-emerald-600 shadow-md font-bold' : 'border-slate-200 hover:border-blue-400 bg-slate-50 hover:bg-blue-50/50 text-slate-700'}">
+                                        <span>${opt}</span>
+                                        ${isSelected ? '<i class="fa-solid fa-circle-check text-white text-base"></i>' : ''}
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                } else {
+                    const textVal = userAnswers[qNum] || '';
+                    optionsHTML = `
+                        <div class="pt-2 space-y-2">
+                            <textarea oninput="recordAnswer(${qNum}, this.value)" rows="4" 
+                                placeholder="${q.placeholder || 'Tuliskan jawapan huraian anda di sini...'}" 
+                                class="w-full p-4 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-800 focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none transition custom-scrollbar">${textVal}</textarea>
+                            <span class="text-[10px] text-slate-400 block text-right">* Jawapan huraian anda akan dianalisis secara automatik oleh AI KBAT.</span>
+                        </div>
+                    `;
+                }
+
+                qCard.innerHTML = `
+                    <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-xl bg-blue-900 text-white text-xs font-black flex items-center justify-center font-heading shadow-sm">
+                                ${qNum}
+                            </span>
+                            <span class="text-xs font-extrabold uppercase tracking-wide text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100">
+                                ${q.subject}
+                            </span>
+                        </div>
+                        <span class="text-[11px] font-bold px-2.5 py-1 rounded-full ${isObj ? 'bg-amber-100 text-amber-800' : 'bg-purple-100 text-purple-800'}">
+                            ${isObj ? 'Objektif' : 'Subjektif (KBAT)'}
+                        </span>
+                    </div>
+
+                    <p class="text-sm sm:text-base font-semibold text-slate-800 leading-relaxed pt-1">
+                        ${q.question}
+                    </p>
+
+                    ${optionsHTML}
+                `;
+
+                container.appendChild(qCard);
+            }
+        }
+
+        function recordAnswer(qNum, value) {
+            userAnswers[qNum] = value;
+
+            // Sekiranya soalan objektif, kemaskini serta-merta butang hijau pada kad soalan
+            const q = questionsList[qNum - 1];
+            if (q.type === 'objektif') {
+                renderPageQuestions();
+            }
+
+            updateAnswerStats();
+            renderPaletteGrid();
+        }
+
+        function changePage(delta) {
+            const nextP = currentPage + delta;
+            if (nextP >= 0 && nextP * 5 < questionsList.length) {
+                currentPage = nextP;
+                renderPageQuestions();
+                window.scrollTo({ top: 120, behavior: 'smooth' });
+            }
+        }
+
+        function jumpToQuestion(qNum) {
+            currentPage = Math.floor((qNum - 1) / 5);
+            renderPageQuestions();
+
+            setTimeout(() => {
+                const el = document.getElementById(`qCard_${qNum}`);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    el.classList.add('ring-2', 'ring-blue-500');
+                    setTimeout(() => el.classList.remove('ring-2', 'ring-blue-500'), 2000);
+                }
+            }, 100);
+        }
+
+        function filterPalette(type) {
+            paletteFilter = type;
+            document.getElementById('filterAll').className = type === 'all' ? 'py-1 rounded bg-white text-blue-700 shadow-sm' : 'py-1 rounded text-slate-600';
+            document.getElementById('filterObj').className = type === 'obj' ? 'py-1 rounded bg-white text-blue-700 shadow-sm' : 'py-1 rounded text-slate-600';
+            document.getElementById('filterSubj').className = type === 'subj' ? 'py-1 rounded bg-white text-blue-700 shadow-sm' : 'py-1 rounded text-slate-600';
+            renderPaletteGrid();
+        }
+
+        function renderPaletteGrid() {
+            const grid = document.getElementById('paletteGrid');
+            grid.innerHTML = '';
+
+            for (let i = 1; i <= 20; i++) {
+                const isObj = i <= 10;
+                if (paletteFilter === 'obj' && !isObj) continue;
+                if (paletteFilter === 'subj' && isObj) continue;
+
+                const val = userAnswers[i];
+                const isAnswered = val && String(val).trim().length > 0;
+                const isCurrent = Math.floor((i - 1) / 5) === currentPage;
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => jumpToQuestion(i);
+
+                let bgClasses = 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200';
+                if (isAnswered) {
+                    bgClasses = 'bg-emerald-500 text-white border-emerald-600 font-bold shadow-sm';
+                }
+                if (isCurrent) {
+                    bgClasses += ' ring-2 ring-blue-600 ring-offset-1';
+                }
+
+                btn.className = `h-9 rounded-xl border text-xs font-semibold flex items-center justify-center transition ${bgClasses}`;
+                btn.innerText = i;
+
+                grid.appendChild(btn);
+            }
+        }
+
+        function updateAnswerStats() {
+            let answered = 0;
+            for (let i = 1; i <= 20; i++) {
+                if (userAnswers[i] && String(userAnswers[i]).trim().length > 0) {
+                    answered++;
+                }
+            }
+            document.getElementById('statAnsweredCount').innerText = answered;
+            document.getElementById('statRemainingCount').innerText = 20 - answered;
+        }
+
+        function confirmSubmitTest() {
+            let answeredCount = 0;
+            for (let i = 1; i <= 20; i++) {
+                if (userAnswers[i] && String(userAnswers[i]).trim().length > 0) answeredCount++;
+            }
+
+            if (answeredCount < 15) {
+                showCustomModal('Ujian Belum Lengkap', `Anda baru menjawab ${answeredCount} daripada 20 soalan. Sila lengkapkan sekurang-kurangnya 15 soalan untuk penilaian AI yang tepat.`);
+                return;
+            }
+
+            processSubmitToAI();
+        }
+
+        function processSubmitToAI() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            document.getElementById('stepTest').classList.add('hidden');
+            document.getElementById('headerStatus').classList.add('hidden');
+            document.getElementById('stepEvaluating').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            let progress = 0;
+            const pBar = document.getElementById('aiProgressBar');
+            const statusTxt = document.getElementById('aiStatusText');
+
+            const statuses = [
+                "Menganalisis 10 jawapan pilihan objektif...",
+                "Menilai jawapan huraian KBAT & struktur jawapan...",
+                "Menjana skor kognitif & pemetaan IQ...",
+                "Menentukan Tahap Penguasaan KSSR/KSSM (TP1 - TP6)...",
+                "Menyediakan Kad Laporan & Penjana Sijil..."
+            ];
+
+            const interval = setInterval(() => {
+                progress += 20;
+                pBar.style.width = `${progress}%`;
+
+                if (progress <= 100) {
+                    statusTxt.innerText = statuses[Math.min(Math.floor(progress / 25), statuses.length - 1)];
+                }
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('stepEvaluating').classList.add('hidden');
+                        generateReportCard();
+                    }, 600);
+                }
+            }, 600);
+        }
+
+        function generateReportCard() {
+            // Kira Skor Objektif
+            let objCorrect = 0;
+            for (let i = 1; i <= 10; i++) {
+                const q = questionsList[i - 1];
+                if (userAnswers[i] && userAnswers[i] === q.correctAnswer) {
+                    objCorrect++;
+                }
+            }
+
+            // Kira Skor Subjektif
+            let subjScore = 0;
+            for (let i = 11; i <= 20; i++) {
+                const ans = userAnswers[i] || '';
+                if (ans.trim().length > 15) subjScore += 2;
+                else if (ans.trim().length > 5) subjScore += 1;
+            }
+
+            const totalScore = (objCorrect * 5) + (subjScore * 2.5); // Max 100
+
+            // Formula IQ
+            const baseIQ = 95;
+            const calculatedIQ = Math.round(baseIQ + (totalScore * 0.45)); // Range 95 - 140
+
+            // Penentuan Tokoh & TP
+            let personaTitle = "Tun Dr. Mahathir";
+            let tpLevel = "TP 5";
+            let tpDesc = "Sangat Baik (Penaakulan KBAT Tinggi)";
+            let studyHours = "2 Jam 15 Minit";
+            let isCertEligible = true;
+
+            if (calculatedIQ >= 135) {
+                personaTitle = "Albert Einstein / Ibnu Sina";
+                tpLevel = "TP 6";
+                tpDesc = "Cemerlang Murni (Kecerdasan Aras Tinggi)";
+                studyHours = "1 Jam 30 Minit";
+            } else if (calculatedIQ >= 125) {
+                personaTitle = "Tun Dr. Mahathir";
+                tpLevel = "TP 5";
+                tpDesc = "Sangat Baik (Penaakulan KBAT Cemerlang)";
+                studyHours = "2 Jam 00 Minit";
+            } else if (calculatedIQ >= 115) {
+                personaTitle = "Prof. Ungku Aziz";
+                tpLevel = "TP 4";
+                tpDesc = "Baik (Tahap Penguasaan Mantap)";
+                studyHours = "2 Jam 30 Minit";
+            } else if (calculatedIQ >= 105) {
+                personaTitle = "Dato' Nicol David";
+                tpLevel = "TP 3";
+                tpDesc = "Memuaskan (Memenuhi Standard)";
+                studyHours = "3 Jam 00 Minit";
+            } else {
+                personaTitle = "Pendeta Za'ba";
+                tpLevel = "TP 2";
+                tpDesc = "Mencapai Tahap Minimum";
+                studyHours = "3 Jam 30 Minit";
+            }
+
+            // Suntik Ke UI Laporan
+            document.getElementById('reportCandidateName').innerText = userData.nama;
+            document.getElementById('reportCandidateMeta').innerText = `${userData.grade} • ${userData.namaSekolah} (${userData.jenisSekolah}) • No. IC: ${userData.ic}`;
+            document.getElementById('reportIQScore').innerText = calculatedIQ;
+            document.getElementById('reportIQTitle').innerText = `Setara: ${personaTitle}`;
+
+            document.getElementById('reportTPBadge').innerText = tpLevel;
+            document.getElementById('reportTPDesc').innerText = tpDesc;
+            document.getElementById('reportStudyHours').innerText = `${studyHours} Sehari`;
+
+            // Huraian Terperinci AI
+            document.getElementById('reportAIDescription').innerHTML = `
+                <p><strong>Analisis AI Ilmu Bakti:</strong> Calon <strong>${userData.nama}</strong> telah menunjukkan prestasi kognitif bernilai skor IQ <strong>${calculatedIQ}</strong> (Setara tahap kecerdasan <em>${personaTitle}</em>).</p>
+                <p>Dalam komponen 10 soalan objektif, calon telah menjawab <strong>${objCorrect} daripada 10</strong> soalan dengan tepat. Manakala dalam komponen 10 soalan subjektif KBAT, calon menunjukkan kemahiran mengolah idea dan pemikiran kritis yang kukuh.</p>
+                <p>Berdasarkan jarak rumah ke sekolah (${userData.jarak} km) dan analisis jenis sekolah (${userData.jenisSekolah}), calon disyorkan memperuntukkan sekurang-kurangnya <strong>${studyHours}</strong> setiap hari untuk latihan soalan aras tinggi KBAT secara konsisten.</p>
+            `;
+
+            // Breakdown Subjek
+            const subjectContainer = document.getElementById('reportSubjectBreakdown');
+            const subjectsData = [
+                { name: "Matematik & Logik Numerik", score: Math.min(100, totalScore + 5) },
+                { name: "Sains & Analisis Fizikal", score: Math.min(100, totalScore - 2) },
+                { name: "Bahasa & Komunikasi KBAT", score: Math.min(100, totalScore + 8) },
+                { name: "Sejarah & Kritis Kemasyarakatan", score: Math.min(100, totalScore + 2) }
+            ];
+
+            subjectContainer.innerHTML = subjectsData.map(s => `
+                <div>
+                    <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                        <span>${s.name}</span>
+                        <span>${s.score}%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                        <div class="bg-blue-600 h-full rounded-full" style="width: ${s.score}%"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Prospek Kerjaya
+            const careerContainer = document.getElementById('reportCareersList');
+            const careers = [
+                { icon: "fa-user-doctor", title: "Pakar Perubatan / Saintis Data", desc: "Sesuai dengan penguasaan analisis analitikal dan Sains KBAT." },
+                { icon: "fa-laptop-code", title: "Jurutera AI / Perisian", desc: "Mempunyai daya taakul logik tinggi dalam menyelesaikan masalah berstruktur." },
+                { icon: "fa-scale-balanced", title: "Peguam / Pakar Strategi Ekonomi", desc: "Keupayaan berbahasa dan kemahiran argumen yang cemerlang." }
+            ];
+
+            careerContainer.innerHTML = careers.map(c => `
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
+                        <i class="fa-solid ${c.icon}"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-800">${c.title}</h5>
+                        <p class="text-[10px] text-slate-500">${c.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Papar Seksyen Report Card
+            document.getElementById('stepReport').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function generateOfficialCertificate() {
+            document.getElementById('certCandidateName').innerText = userData.nama.toUpperCase();
+            document.getElementById('certCandidateMeta').innerText = `NO. IC: ${userData.ic} | NO. GILIRAN: ${userData.noGiliran}`;
+            document.getElementById('certIC').innerText = userData.ic;
+            document.getElementById('certNoGiliran').innerText = userData.noGiliran;
+            document.getElementById('certSchool').innerText = `SEKOLAH: ${userData.namaSekolah.toUpperCase()} (${userData.grade.toUpperCase()})`;
+
+            document.getElementById('certIQVal').innerText = document.getElementById('reportIQScore').innerText;
+            document.getElementById('certTPVal').innerText = document.getElementById('reportTPBadge').innerText;
+            document.getElementById('certSetaraVal').innerText = document.getElementById('reportIQTitle').innerText.replace('Setara: ', '');
+
+            // Tarikh & Serial
+            const now = new Date();
+            const dateStr = `${now.getDate()} ${['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember'][now.getMonth()]} ${now.getFullYear()}`;
+            document.getElementById('certDate').innerText = `Tarikh: ${dateStr}`;
+
+            const randomSerial = 'IB-IQ2026-' + Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('certSerialNo').innerText = randomSerial;
+
+            // Tukar Paparan
+            document.getElementById('stepReport').classList.add('hidden');
+            document.getElementById('stepCertificate').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToReport() {
+            document.getElementById('stepCertificate').classList.add('hidden');
+            document.getElementById('stepReport').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Custom Modal Utility
+        function showCustomModal(title, msg) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = msg;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeCustomModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
